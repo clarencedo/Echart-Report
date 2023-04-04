@@ -21,9 +21,7 @@ export default function Filter({ value, sendValueToFather }) {
   const [selectedyAxisOption, setSelectedyAxisOption] = React.useState(null);
   const selecteOptions = value;
   const sendValue = () => {
-    // sendValueToFather(`this is value ${count}`);
-    // count++;
-    // console.log("send",count)
+
     const selection = {
       filed: selectedOptions,
       type: radiovalue,

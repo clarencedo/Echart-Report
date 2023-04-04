@@ -3,10 +3,8 @@ function generateOption(param, data) {
   const ykey = param.y.label;
   const xmap = new Map();
   const xset = new Set();
-
   const ymap = new Map();
   const yset = new Set();
-
   const hybridSet = new Set();
   const hybridMap = new Map();
   let option = {
@@ -22,7 +20,6 @@ function generateOption(param, data) {
   data.map((item)=>{
      let XKey ="";
      Object.getOwnPropertyNames(item).forEach(function(val, idx, array) {
-      let count1 = 0;
       if(val === xkey){
         let xcount =
           xmap.get(item[val]) !== undefined ? xmap.get(item[val]) : 0
@@ -45,9 +42,6 @@ function generateOption(param, data) {
       }
     });
   })
-  // console.log(xset,xmap)
-  // console.log(yset,ymap)
-  // console.log(hybridMap)
 
   const sourceData = ["product"]
   // }
@@ -69,7 +63,6 @@ function generateOption(param, data) {
   yset.forEach(()=>{
     option.series.push({type: param.type})
   })
-  console.log(option);
   return option;
 }
 
