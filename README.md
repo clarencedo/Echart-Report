@@ -1,6 +1,7 @@
-# Getting Started with Create React App
+# To be Continued
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A react project setup from scratch with echart.js , aws cloudscape, apollo client.
+Plenty of jobs need to be done in future, coz still lots of bugs.
 
 ## Available Scripts
 
