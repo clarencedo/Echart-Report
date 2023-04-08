@@ -53,7 +53,7 @@ function Home() {
             sendValueToFather={getValueFromSon.bind(this)}
           />
         </Box>
-        <Box margin={{ top: "m" }}>
+        <Box margin={{ top: "l" }}>
           <Container
             header={
               <Header variant="h2" description="gengerated by echart.js">
