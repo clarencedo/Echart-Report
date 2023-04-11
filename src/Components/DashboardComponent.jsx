@@ -32,8 +32,8 @@ export default function DashboardComponent() {
     // },
     {
       id: "3",
-      rowSpan: 5,
-      columnSpan: 4,
+      rowSpan: 4,
+      columnSpan: 2,
       data: {
         title: "Demo 3",
         content: (
@@ -43,8 +43,8 @@ export default function DashboardComponent() {
     },
     {
       id: "4",
-      rowSpan: 5,
-      columnSpan: 3,
+      rowSpan: 4,
+      columnSpan: 2,
       data: {
         title: "Demo 4",
         content: (

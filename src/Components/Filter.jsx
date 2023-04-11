@@ -45,7 +45,7 @@ export default function Filter({ value, sendValueToFather }) {
             placeholder="Choose options"
             selectedAriaLabel="Selected"
           />
-          <ExpandableSection headerText="Select X-Axis & Y-Axis Field">
+          <ExpandableSection headerText="Select X-Axis & Dimension Field">
             <Select
               selectedOption={selectedxAxisOption}
               onChange={({ detail }) =>
@@ -53,7 +53,7 @@ export default function Filter({ value, sendValueToFather }) {
               }
               options={selectedOptions}
               loadingText="Loading instances"
-              placeholder="Choose a X-Axis Field Name"
+              placeholder="Choose A X-Axis Field Name"
               selectedAriaLabel="Selected"
               statusType="loading"
             />
@@ -64,7 +64,7 @@ export default function Filter({ value, sendValueToFather }) {
               }
               options={selectedOptions}
               loadingText="Loading instances"
-              placeholder="Choose a Y-Axis Field Name"
+              placeholder="Choose A Dimension Field Name"
               selectedAriaLabel="Selected"
               statusType="loading"
             />

@@ -14,6 +14,7 @@ import Home from "./Components/Home";
 import "@cloudscape-design/global-styles/index.css";
 import DashboardComponent from "./Components/DashboardComponent";
 import MainComponent from "./Components/MainComponent";
+import CardsComponent from "./Components/CardsComponent";
 function App() {
   const url = appSyncConfig.aws_appsync_graphqlEndpoint;
 
@@ -43,7 +44,8 @@ function App() {
       <div>
         {/* <DashboardComponent/> */}
         {/* <MainComponent/> */}
-        <Home/>
+        {/* <Home/> */}
+        <CardsComponent/>
       </div>
     </ApolloProvider>
   );
