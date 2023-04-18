@@ -5,7 +5,9 @@
   "dependencies": {
     "@apollo/client": "^3.7.10",
     "@cloudscape-design/board-components": "^3.0.8",
+    "@cloudscape-design/collection-hooks": "^1.0.20",
     "@cloudscape-design/components": "^3.0.238",
+    "@cloudscape-design/design-tokens": "^3.0.11",
     "@cloudscape-design/global-styles": "^1.0.8",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
@@ -46,5 +48,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@typescript-eslint/parser": "^5.58.0",
+    "typescript": "^5.0.4"
   }
 }
