@@ -5,10 +5,12 @@ import { Cards, CollectionPreferences, Pagination, Box, SpaceBetween,Button, Tex
 import FullPageHeader from "./full-page-header";
 import { useCollection } from '@cloudscape-design/collection-hooks';
 import { PaginationProps, TableProps } from '@cloudscape-design/components';
+import {useNavigate} from "react-router-dom";
 // import {paginationAriaLabels} from "../../i18n-strings/pagination";
 const DetailsCards = ({loadHelpPanelContent}) => {
     const [loading, setLoading] = useState(true);
     const [distributions, setDistributions] = useState([]);
+    const navigate = useNavigate()
     const [preferences, setPreferences] = useState(DEFAULT_PREFERENCES)
     const  TableEmptyState = ({ resourceName }) => (
         <Box margin={{ vertical: 'xs' }} textAlign="center" color="inherit">
@@ -62,6 +64,8 @@ const DetailsCards = ({loadHelpPanelContent}) => {
     useEffect(() =>{
         setDistributions(new DataProvider().getData())
         setLoading(false)
+        // let op = localStorage.getItem('op');
+        // console.log(JSON.parse(op))
     },[])
 
 
@@ -82,6 +86,7 @@ const DetailsCards = ({loadHelpPanelContent}) => {
                     selectedItemsCount={collectionProps.selectedItems.length}
                     counter={getHeaderCounterText(distributions, collectionProps.selectedItems)}
                     onInfoLinkClick={loadHelpPanelContent}
+                    item={collectionProps.selectedItems}
                 />
             }
             filter={

@@ -1,4 +1,5 @@
 import data from "./data";
+// import data from "./echart-data";
 export default class DataProvider {
     getData() {
         const val = data;

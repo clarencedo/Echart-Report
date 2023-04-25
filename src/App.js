@@ -19,6 +19,9 @@ import {AppLayout, AppLayoutProps, HelpPanel} from "@cloudscape-design/component
 import {Navigation} from "./Common/navigation";
 import DetailsCards from "./Components/Dashboard";
 import {Breadcrumbs} from "./Components/Dashboard/common-components";
+import Create from "./Components/Create";
+import DashBoard from "./Components/Dashboard/entry";
+import {BrowserRouter} from "react-router-dom";
 function App() {
   const [toolsOpen, setToolsOpen] = useState(false);
   const appLayout = useRef();
@@ -67,35 +70,39 @@ function App() {
       </HelpPanel>
   );
   return (
-      <CustomAppLayout
-          ref={appLayout}
-          navigation={<Navigation activeHref="#/distributions" />}
-          // notifications={<Notifications successNotification={true} />}
-          breadcrumbs={<Breadcrumbs />}
-          content={
-            <DetailsCards
-                loadHelpPanelContent={() => {
-                  setToolsOpen(true);
-                  appLayout.current?.focusToolsClose();
-                }}
-            />
-          }
-          contentType="cards"
-          tools={<ToolsContent />}
-          toolsOpen={toolsOpen}
-          onToolsChange={({ detail }) => setToolsOpen(detail.open)}
-          stickyNotifications={true}
-      />
+      // <CustomAppLayout
+      //     ref={appLayout}
+      //     navigation={<Navigation activeHref="#/distributions" />}
+      //     breadcrumbs={<Breadcrumbs />}
+      //     content={
+      //       <DetailsCards
+      //           loadHelpPanelContent={() => {
+      //             setToolsOpen(true);
+      //             appLayout.current?.focusToolsClose();
+      //           }}
+      //       />
+      //     }
+      //     contentType="cards"
+      //     tools={<ToolsContent />}
+      //     toolsOpen={toolsOpen}
+      //     onToolsChange={({ detail }) => setToolsOpen(detail.open)}
+      //     stickyNotifications={true}
+      // />
 
 
-    // <ApolloProvider client={client}>
-    //   <div>
-    //      {/*<DashboardComponent/>*/}
-    //      {/*<MainComponent/>*/}
-    //     {/* <Home/>*/}
-    //     {/*<CardsComponent/>*/}
-    //   </div>
-    // </ApolloProvider>
+    <ApolloProvider client={client}>
+      <div>
+        <BrowserRouter>
+          <DashBoard/>
+        </BrowserRouter>
+         {/*<DashboardComponent/>*/}
+         {/*<MainComponent/>*/}
+        {/*<Create/>*/}
+        {/*<DashBoard/>*/}
+        {/* <Home/>*/}
+        {/*<CardsComponent/>*/}
+      </div>
+    </ApolloProvider>
   );
 }
 

@@ -41,6 +41,16 @@ export const CARD_DEFINITIONS = {
             content: item => item.origin,
         },
         {
+            id: 'title',
+            header: 'Title',
+            content: item => item.title,
+        },
+        {
+            id: 'lastModifyDate',
+            header: 'Last Modify Date',
+            content: item => item.lastModifyDate,
+        },
+        {
             id: 'state',
             header: 'State',
             content: item => (
@@ -57,7 +67,6 @@ export const CARD_DEFINITIONS = {
     ],
 };
 
-
 export const VISIBLE_CONTENT_OPTIONS = [
     {
         label: 'Main Report properties',
@@ -69,7 +78,9 @@ export const VISIBLE_CONTENT_OPTIONS = [
             { id: 'logging', label: 'Logging' },
             { id: 'origin', label: 'Origin' },
             { id: 'state', label: 'State' },
-            { id: 'image-type', label: 'Image'}
+            { id: 'image-type', label: 'Image'},
+            { id: 'title', label: 'Title'},
+            { id: 'lastModifyDate', label: 'Last Modify Date'},
         ],
     },
 ];
@@ -81,6 +92,7 @@ export const PAGE_SIZE_OPTIONS = [
 ];
 
 export const DEFAULT_PREFERENCES = {
-    pageSize: 30,
-    visibleContent: ['domainName', 'deliveryMethod', 'state','image-type'],
+    pageSize: 10,
+    // visibleContent: ['domainName', 'deliveryMethod', 'state','image-type'],
+    visibleContent: ['title', 'lastModifyDate','image-type'],
 };

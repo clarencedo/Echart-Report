@@ -57,7 +57,10 @@ export default function MainComponent() {
     setOptions(pre_ops);
     console.log("trigger", pre_ops);
   };
-
+  const save = () =>{
+    console.log("father")
+    localStorage.setItem("op",options);
+  }
   const renderEchart = () => {
     if (echartVisble) {
       return <Echart option={echartoption} />;
@@ -93,6 +96,7 @@ export default function MainComponent() {
               <Filter
                 value={selectValue}
                 sendValueToFather={getValueFromSon.bind(this)}
+                saveOption={save.bind(this)}
               />
             </Box>
             <Box margin={{ top: "l" }}>

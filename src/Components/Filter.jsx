@@ -1,5 +1,5 @@
 import React from "react";
-import { Multiselect, Container } from "@cloudscape-design/components";
+import {Multiselect, Container, Input} from "@cloudscape-design/components";
 import SpaceBetween from "@cloudscape-design/components/space-between";
 import Button from "@cloudscape-design/components/button";
 import RadioGroup from "@cloudscape-design/components/radio-group";
@@ -9,8 +9,11 @@ import {
   ExpandableSection,
   Select,
 } from "@cloudscape-design/components";
-export default function Filter({ value, sendValueToFather }) {
+import {useNavigate} from "react-router-dom";
+export default function Filter({ value, sendValueToFather, saveOption, visible }) {
   const [radiovalue, setRadioValue] = React.useState("pie");
+  const [title, setTitle] = React.useState();
+  const navigate = useNavigate()
   const [selectedOptions, setSelectedOptions] = React.useState([
     // {
     //   label: "Option 1",
@@ -21,7 +24,6 @@ export default function Filter({ value, sendValueToFather }) {
   const [selectedyAxisOption, setSelectedyAxisOption] = React.useState(null);
   const selecteOptions = value;
   const sendValue = () => {
-
     const selection = {
       filed: selectedOptions,
       type: radiovalue,
@@ -30,6 +32,18 @@ export default function Filter({ value, sendValueToFather }) {
     };
     sendValueToFather(selection);
   };
+  const saveOptions = () =>{
+    console.log("son");
+    saveOption(title);
+  }
+  const back = () =>{
+      navigate("/")
+  }
+
+  const clear = () =>{
+    setSelectedOptions([]);
+    setRadioValue('');
+  }
 
   return (
     <Container header={<Header variant="h2">Echarts Selection</Header>}>
@@ -74,6 +88,7 @@ export default function Filter({ value, sendValueToFather }) {
           <RadioGroup
             onChange={({ detail }) => setRadioValue(detail.value)}
             value={radiovalue}
+
             items={[
               { value: "pie", label: "Pie" },
               { value: "line", label: "Line" },
@@ -81,20 +96,19 @@ export default function Filter({ value, sendValueToFather }) {
               { value: "scatter", label: "Scatter" },
             ]}
           />
+          <Input value={title}  placeholder="Input Title" onChange={({detail}) => setTitle(detail.value)}/>
         </SpaceBetween>
         <SpaceBetween size="s">
-          <Button>Clear Selection</Button>
-          <Button
-            ariaLabel="Report a bug (opens new tab)"
-            href="https://example.com"
-            iconAlign="right"
-            iconName="external"
-            target="_blank"
-          >
-            Report a bug
-          </Button>
-          <Button variant="primary" onClick={sendValue}>
+          <Button onClick={clear}>Clear Selection</Button>
+          <Button onClick={back}>
+            Back
+          </Button
+       >
+          <Button variant="primary" onClick={sendValue} >
             Generate Report
+          </Button>
+          <Button variant="primary" onClick={saveOptions} >
+            Save Report
           </Button>
         </SpaceBetween>
       </ColumnLayout>
