@@ -34,8 +34,12 @@ export default function Create({opValue,name}) {
     const selectValue = [];
     // const navigate = Rout.useNavigate()
     useEffect(() => {
-        setOptions(location.state.ops)
-        setEchartVisible(true)
+        console.log(location.state)
+        if(location.state)
+        {
+            setOptions(location.state.ops)
+            setEchartVisible(true)
+        }
     },[location]);
     if (loading) return "Loading...";
     if (error) return `Error! ${error.message}`;
