@@ -6,9 +6,11 @@ import { Button } from "@cloudscape-design/components";
 import Filter from "./Filter";
 import TestComponent from "./TestComponent";
 import EchartsComponent from "./EchartsComponent";
+import ButtonDropdown from "@cloudscape-design/components/button-dropdown";
 
 export default function EchartsBoardItemComponent(props) {
    const options = props.optionSet;
+   const actions = props.actions;
    const [items, setItems] = React.useState([]);
    // const [id, setId] = React.useState(1);
    // const [options,setOptions] = React.useState([]);
@@ -51,6 +53,28 @@ export default function EchartsBoardItemComponent(props) {
               resizeHandleAriaDescription:
                 "Use Space or Enter to activate resize, arrow keys to move, Space or Enter to submit, or Escape to discard.",
             }}
+            settings={
+              <ButtonDropdown
+                  items={[
+                      { text: "Delete", id: "rm", disabled: false },
+                      { text: "Move", id: "mv", disabled: false },
+                      { text: "Rename", id: "rn", disabled: true },
+                      {
+                          text: "View metrics",
+                          href: "https://example.com",
+                          external: true,
+                          externalIconAriaLabel: "(opens in new tab)"
+                      }
+                  ]}
+                  variant="icon"
+                  onItemClick={event =>{
+                      if(event.detail.id === 'rm'){
+                          //onRemove();
+                          console.log("remove",event.detail)
+                      }
+                  }}
+              />
+            }
           >
             {item.data.content}
             {/* {renderButton()} */}
