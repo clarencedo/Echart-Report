@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import {gql, useQuery} from "@apollo/client";
 import TestQuery from "../../GraphQL/ReportingDashboardQuery";
 import Echart from ".././EchartsComponent";
@@ -12,6 +12,7 @@ import {
     AppLayout,
     SideNavigation,
     Link,
+    Tabs,
 } from "@cloudscape-design/components";
 import Filter from ".././Filter";
 // import * as Rout from "react-router-dom";
@@ -23,18 +24,19 @@ import {useLocation, useParams} from "react-router-dom";
 
 export default function Create({opValue,name}) {
     const [echartoption, setEchartOption] = useState();
-    console.log(name,"name")
+    const chartRef = useRef();
+    // console.log(name,"name")
     let location = useLocation()
-    console.log("location",location)
+    // console.log("location",location)
     const {visible} = useParams()
-    console.log("create",visible)
+    // console.log("create",visible)
     const [echartVisble, setEchartVisible] = useState(false);
     const [options, setOptions] = useState([]);
     const {loading, data, error, client} = useQuery(TestQuery);
     const selectValue = [];
     // const navigate = Rout.useNavigate()
     useEffect(() => {
-        console.log(location.state)
+        // console.log(location.state)
         if(location.state)
         {
             setOptions(location.state.ops)
@@ -78,19 +80,31 @@ export default function Create({opValue,name}) {
     }
     const renderEchart = () => {
         if (echartVisble) {
-            return <Echart option={echartoption}/>;
+            return <Echart option={echartoption} />;
         } else {
             return <h2 align="center">No Data</h2>;
         }
     };
     const renderBoardItem = () => {
         if (echartVisble ) {
-            return <EchartsBoardItemComponent optionSet={options}/>;
+            return <EchartsBoardItemComponent optionSet={options} deleteId={id => onChartDelete(id)} />;
         } else {
             return <h2 align="center"></h2>;
         }
     };
 
+    const onChartDelete = (id) =>{
+        // const {deleteId} = chartRef.current || {};
+        console.log("Shanchu ",id, options);
+        let val = []
+        options.forEach( (item)=>{
+            if(item.id !== id){
+                val.push(item);
+            }
+        })
+        console.log("create-options",options)
+        setOptions(val);
+    }
     const renderFilter = () =>{
         if (visible === "true") {
             return  <Filter

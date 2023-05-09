@@ -4,7 +4,7 @@ import Link, { LinkProps } from '@cloudscape-design/components/link';
 import {useNavigate} from "react-router-dom";
 const FullPageHeader = ({title = 'Echarts Report', createButtonText = 'Create Report', extraActions = null,item,selectedItemsCount, onInfoLinkClick,...props}) => {
     const isOnlyOneSelected = selectedItemsCount === 1;
-    console.log("selected",item)
+    // console.log("selected",item)
     const navigate = useNavigate();
     const InfoLink = (props) => {
         return (

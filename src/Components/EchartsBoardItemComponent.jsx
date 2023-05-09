@@ -7,17 +7,26 @@ import Filter from "./Filter";
 import TestComponent from "./TestComponent";
 import EchartsComponent from "./EchartsComponent";
 import ButtonDropdown from "@cloudscape-design/components/button-dropdown";
+import Tabs from "@cloudscape-design/components/tabs";
+import {useImperativeHandle, useState} from "react";
 
 export default function EchartsBoardItemComponent(props) {
-   const options = props.optionSet;
-   const actions = props.actions;
+   let options = props.optionSet;
+   console.log(options);
    const [items, setItems] = React.useState([]);
+   const [ chartOptions, setChartOptions] = useState();
+   const [ deleteId, setDeleteId] = useState([]);
+   // useImperativeHandle(ref,()=>{
+   //     return{
+   //         deleteId
+   //     }
+   // },[props])
    // const [id, setId] = React.useState(1);
    // const [options,setOptions] = React.useState([]);
     React.useEffect(()=>{
       const boardItems = [];
       options.forEach((item)=>{
-         console.log("option-id ->", item.id)
+         // console.log("option-id ->", item.id)
          boardItems.push({
             id: item.id,
             rowSpan: 5,
@@ -29,17 +38,32 @@ export default function EchartsBoardItemComponent(props) {
                )
             }
          })
-         // setId((id) => id +1)
-         // console.log("id",id)
-         console.log('newitem', item);
       })
-      console.log('items-2',boardItems)
       setItems(boardItems);
     },[props])
     const dosomething = (event) => {
       console.log(event, event.detail.items);
       setItems(event.detail.items);
     };
+    const onRemove = (param) =>{
+        let val = items.filter(({id}) =>{
+            return id !== param;
+        })
+        // options = options.filter(({id}) =>{
+        //     return id !== param;
+        // })
+        // let new_ops = [];
+        // options.forEach((item)=>{
+        //    if(item.id !== param){
+        //        new_ops.push(item);
+        //    }
+        // });
+        // options = new_ops;
+        // console.log('finanl -op',options,new_ops)
+       setItems(val);
+        props.deleteId(param);
+    }
+
     return (
       <Board
         renderItem={(item) => (
@@ -56,21 +80,12 @@ export default function EchartsBoardItemComponent(props) {
             settings={
               <ButtonDropdown
                   items={[
-                      { text: "Delete", id: "rm", disabled: false },
-                      { text: "Move", id: "mv", disabled: false },
-                      { text: "Rename", id: "rn", disabled: true },
-                      {
-                          text: "View metrics",
-                          href: "https://example.com",
-                          external: true,
-                          externalIconAriaLabel: "(opens in new tab)"
-                      }
+                      { text: "Remove", id: "rm", disabled: false },
                   ]}
                   variant="icon"
                   onItemClick={event =>{
                       if(event.detail.id === 'rm'){
-                          //onRemove();
-                          console.log("remove",event.detail)
+                          onRemove(item.id);
                       }
                   }}
               />
