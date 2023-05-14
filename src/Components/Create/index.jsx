@@ -21,6 +21,7 @@ import TestComponent from ".././TestComponent";
 import DashboardComponent from ".././DashboardComponent";
 import EchartsBoardItemComponent from "../EchartsBoardItemComponent";
 import {useLocation, useParams} from "react-router-dom";
+import ChartManagement from "../Echart";
 
 export default function Create({opValue,name}) {
     const [echartoption, setEchartOption] = useState();
@@ -32,8 +33,11 @@ export default function Create({opValue,name}) {
     // console.log("create",visible)
     const [echartVisble, setEchartVisible] = useState(false);
     const [options, setOptions] = useState([]);
+    const [tableColumns, setTableColumns] = useState([null]);
+    const [tableValue, setTableValue] = useState([]);
     const {loading, data, error, client} = useQuery(TestQuery);
     const selectValue = [];
+    let id = 1;
     // const navigate = Rout.useNavigate()
     useEffect(() => {
         // console.log(location.state)
@@ -42,6 +46,8 @@ export default function Create({opValue,name}) {
             setOptions(location.state.ops)
             setEchartVisible(true)
         }
+        console.log("fetch-data:",data);
+        setTableValue(data.ReportingDashboard);
     },[location]);
     if (loading) return "Loading...";
     if (error) return `Error! ${error.message}`;
@@ -54,12 +60,18 @@ export default function Create({opValue,name}) {
         selectedValue++;
     }
 
-    const getValueFromSon = (param) => {
+    const getValueFromSon = (param,type) => {
+        if(type === "table"){
+            const fieldArr = param.map(({label})=>{
+                return label;
+            })
+            setTableColumns(fieldArr)
+            return;
+        }
         generateOption(param, data.ReportingDashboard);
         setEchartVisible(true);
         setEchartOption(generateOption(param, data.ReportingDashboard));
         let ops = generateOption(param, data.ReportingDashboard);
-        let id = 1;
         let pre_ops = options;
         //   let newops = [];
         //   newops.push(pre_ops);
@@ -87,7 +99,11 @@ export default function Create({opValue,name}) {
     };
     const renderBoardItem = () => {
         if (echartVisble ) {
-            return <EchartsBoardItemComponent optionSet={options} deleteId={id => onChartDelete(id)} />;
+            return <EchartsBoardItemComponent
+                optionSet={options}
+                deleteId={id => onChartDelete(id)}
+                tableValue={tableValue}
+                tableColumns={tableColumns} />;
         } else {
             return <h2 align="center"></h2>;
         }
@@ -132,6 +148,7 @@ export default function Create({opValue,name}) {
                 </Box>
                 <Box margin={{top: "l"}}>
                     {renderBoardItem()}
+                    {/*<ChartManagement/>*/}
                 </Box>
             </ContentLayout>
         </Box>

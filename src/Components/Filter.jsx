@@ -13,6 +13,7 @@ import {useNavigate} from "react-router-dom";
 export default function Filter({ value, sendValueToFather, saveOption, visible }) {
   const [radiovalue, setRadioValue] = React.useState("pie");
   const [title, setTitle] = React.useState();
+  const [tab,setTab] = React.useState('');
   const navigate = useNavigate()
   const [selectedOptions, setSelectedOptions] = React.useState([
     // {
@@ -24,6 +25,10 @@ export default function Filter({ value, sendValueToFather, saveOption, visible }
   const [selectedyAxisOption, setSelectedyAxisOption] = React.useState(null);
   const selecteOptions = value;
   const sendValue = () => {
+    if(radiovalue === "table"){
+      sendValueToFather(selectedOptions,"table");
+      return;
+    }
     const selection = {
       filed: selectedOptions,
       type: radiovalue,
@@ -43,6 +48,10 @@ export default function Filter({ value, sendValueToFather, saveOption, visible }
   const clear = () =>{
     setSelectedOptions([]);
     setRadioValue('');
+  }
+
+  const addTab = () =>{
+
   }
 
   return (
@@ -94,16 +103,16 @@ export default function Filter({ value, sendValueToFather, saveOption, visible }
               { value: "line", label: "Line" },
               { value: "bar", label: "Bar" },
               { value: "scatter", label: "Scatter" },
+              { value: "table", label: "Table" },
             ]}
           />
           <Input value={title}  placeholder="Input Title" onChange={({detail}) => setTitle(detail.value)}/>
+          <Input onChange={({ detail }) => setTab(detail.value)} value={tab}/>
         </SpaceBetween>
         <SpaceBetween size="s">
+          <Button onClick={back}>Back</Button>
           <Button onClick={clear}>Clear Selection</Button>
-          <Button onClick={back}>
-            Back
-          </Button
-       >
+          <Button onClick={addTab}>Add Tab</Button>
           <Button variant="primary" onClick={sendValue} >
             Generate Report
           </Button>

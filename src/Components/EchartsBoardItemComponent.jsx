@@ -9,6 +9,7 @@ import EchartsComponent from "./EchartsComponent";
 import ButtonDropdown from "@cloudscape-design/components/button-dropdown";
 import Tabs from "@cloudscape-design/components/tabs";
 import {useImperativeHandle, useState} from "react";
+import TableChart from "./Table";
 
 export default function EchartsBoardItemComponent(props) {
    let options = props.optionSet;
@@ -38,7 +39,20 @@ export default function EchartsBoardItemComponent(props) {
                )
             }
          })
-      })
+      });
+      if(props.tableColumns){
+          boardItems.push({
+              id: boardItems.length+1,
+              rowSpan: 5,
+              columnSpan: 4,
+              data:{
+                  title: "title",
+                  content: (
+                     <TableChart tableValue={props.tableValue} tableColumns={props.tableColumns}/>
+                  )
+              }
+          })
+      }
       setItems(boardItems);
     },[props])
     const dosomething = (event) => {
