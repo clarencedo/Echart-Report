@@ -33,6 +33,7 @@ const Create = ({opValue,name})=> {
     const [options, setOptions] = useState([]);
     const [tableColumns, setTableColumns] = useState([null]);
     const [tableValue, setTableValue] = useState([]);
+    const [tabs,setTabs] = useState(['echarts-tab'])
     const {loading, data, error, client} = useQuery(TestQuery);
     const selectValue = [];
     let id = 1;
@@ -110,7 +111,7 @@ const Create = ({opValue,name})=> {
             optionSet={options}
             tableValue={tableValue}
             tableColumns={tableColumns}
-            // tabInfo={}
+            tabValue={tabs}
         />
     }
 

@@ -45,7 +45,7 @@ const EchartsBoardItemComponent = (props) => {
       //         }
       //     })
       // }
-      // setItems(boardItems);
+      setItems(boardItems);
     },[props])
     const dosomething = (event) => {
       console.log(event, event.detail.items);
