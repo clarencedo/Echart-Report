@@ -4,26 +4,18 @@ import Header from "@cloudscape-design/components/header";
 import Board from "@cloudscape-design/board-components/board";
 import { Button } from "@cloudscape-design/components";
 import Filter from "./Filter";
-import TestComponent from "./TestComponent";
-import EchartsComponent from "./EchartsComponent";
+import EchartsComponent from "./Echart/EchartsComponent";
 import ButtonDropdown from "@cloudscape-design/components/button-dropdown";
 import Tabs from "@cloudscape-design/components/tabs";
 import {useImperativeHandle, useState} from "react";
 import TableChart from "./Table";
 
-export default function EchartsBoardItemComponent(props) {
+const EchartsBoardItemComponent = (props) => {
    let options = props.optionSet;
    console.log(options);
    const [items, setItems] = React.useState([]);
    const [ chartOptions, setChartOptions] = useState();
    const [ deleteId, setDeleteId] = useState([]);
-   // useImperativeHandle(ref,()=>{
-   //     return{
-   //         deleteId
-   //     }
-   // },[props])
-   // const [id, setId] = React.useState(1);
-   // const [options,setOptions] = React.useState([]);
     React.useEffect(()=>{
       const boardItems = [];
       options.forEach((item)=>{
@@ -31,7 +23,7 @@ export default function EchartsBoardItemComponent(props) {
          boardItems.push({
             id: item.id,
             rowSpan: 5,
-            columnSpan: 2,
+            columnSpan: 4,
             data:{
                title: "title",
                content: (
@@ -40,20 +32,20 @@ export default function EchartsBoardItemComponent(props) {
             }
          })
       });
-      if(props.tableColumns){
-          boardItems.push({
-              id: boardItems.length+1,
-              rowSpan: 5,
-              columnSpan: 4,
-              data:{
-                  title: "title",
-                  content: (
-                     <TableChart tableValue={props.tableValue} tableColumns={props.tableColumns}/>
-                  )
-              }
-          })
-      }
-      setItems(boardItems);
+      // if(props.tableColumns){
+      //     boardItems.push({
+      //         id: boardItems.length+1,
+      //         rowSpan: 5,
+      //         columnSpan: 4,
+      //         data:{
+      //             title: "title",
+      //             content: (
+      //                <TableChart tableValue={props.tableValue} tableColumns={props.tableColumns}/>
+      //             )
+      //         }
+      //     })
+      // }
+      // setItems(boardItems);
     },[props])
     const dosomething = (event) => {
       console.log(event, event.detail.items);
@@ -195,3 +187,4 @@ export default function EchartsBoardItemComponent(props) {
       />
     );
 }
+export default React.memo(EchartsBoardItemComponent)

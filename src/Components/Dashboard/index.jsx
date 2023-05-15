@@ -6,12 +6,16 @@ import FullPageHeader from "./full-page-header";
 import { useCollection } from '@cloudscape-design/collection-hooks';
 import { PaginationProps, TableProps } from '@cloudscape-design/components';
 import {useNavigate} from "react-router-dom";
+import {useQuery} from "@apollo/client";
+import TestQuery from "../../GraphQL/ReportingDashboardQuery";
 // import {paginationAriaLabels} from "../../i18n-strings/pagination";
 const DetailsCards = ({loadHelpPanelContent}) => {
     const [loading, setLoading] = useState(true);
     const [distributions, setDistributions] = useState([]);
     const navigate = useNavigate()
-    const [preferences, setPreferences] = useState(DEFAULT_PREFERENCES)
+    const [preferences, setPreferences] = useState(DEFAULT_PREFERENCES);
+    const { data, error, client} = useQuery(TestQuery);
+    console.log("init-data",data);
     const  TableEmptyState = ({ resourceName }) => (
         <Box margin={{ vertical: 'xs' }} textAlign="center" color="inherit">
             <SpaceBetween size="xxs">

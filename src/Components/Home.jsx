@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { gql, useQuery } from "@apollo/client";
 import TestQuery from "../GraphQL/ReportingDashboardQuery";
-import Echart from "./EchartsComponent";
+import Echart from "./Echart/EchartsComponent";
 import { from, Observable, Rx, of, filter } from "rxjs";
 import {
   Box,

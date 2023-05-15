@@ -173,4 +173,4 @@ function TableChart(props) {
     );
 }
 
-export default TableChart;
+export default React.memo(TableChart);

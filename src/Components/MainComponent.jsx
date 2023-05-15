@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { gql, useQuery } from "@apollo/client";
 import TestQuery from "../GraphQL/ReportingDashboardQuery";
-import Echart from "./EchartsComponent";
+import Echart from "./Echart/EchartsComponent";
 import { from, Observable, Rx, of, filter } from "rxjs";
 import {
   Box,
@@ -16,7 +16,6 @@ import {
 import Filter from "./Filter";
 // import * as Rout from "react-router-dom";
 import generateOption from "../Utils/optionHandler";
-import TestComponent from "./TestComponent";
 import DashboardComponent from "./DashboardComponent";
 import EchartsBoardItemComponent from "./EchartsBoardItemComponent";
 export default function MainComponent() {

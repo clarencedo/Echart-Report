@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useRef} from "react";
 import {gql, useQuery} from "@apollo/client";
 import TestQuery from "../../GraphQL/ReportingDashboardQuery";
-import Echart from ".././EchartsComponent";
 import {from, Observable, Rx, of, filter} from "rxjs";
 import {
     Box,
@@ -17,13 +16,12 @@ import {
 import Filter from ".././Filter";
 // import * as Rout from "react-router-dom";
 import generateOption from "../../Utils/optionHandler";
-import TestComponent from ".././TestComponent";
 import DashboardComponent from ".././DashboardComponent";
 import EchartsBoardItemComponent from "../EchartsBoardItemComponent";
 import {useLocation, useParams} from "react-router-dom";
 import ChartManagement from "../Echart";
 
-export default function Create({opValue,name}) {
+const Create = ({opValue,name})=> {
     const [echartoption, setEchartOption] = useState();
     const chartRef = useRef();
     // console.log(name,"name")
@@ -46,7 +44,6 @@ export default function Create({opValue,name}) {
             setOptions(location.state.ops)
             setEchartVisible(true)
         }
-        console.log("fetch-data:",data);
         setTableValue(data.ReportingDashboard);
     },[location]);
     if (loading) return "Loading...";
@@ -90,13 +87,13 @@ export default function Create({opValue,name}) {
         localStorage.setItem("title",param);
         localStorage.setItem("op", JSON.stringify(options));
     }
-    const renderEchart = () => {
-        if (echartVisble) {
-            return <Echart option={echartoption} />;
-        } else {
-            return <h2 align="center">No Data</h2>;
-        }
-    };
+    // const renderEchart = () => {
+    //     if (echartVisble) {
+    //         return <Echart option={echartoption} />;
+    //     } else {
+    //         return <h2 align="center">No Data</h2>;
+    //     }
+    // };
     const renderBoardItem = () => {
         if (echartVisble ) {
             return <EchartsBoardItemComponent
@@ -108,6 +105,14 @@ export default function Create({opValue,name}) {
             return <h2 align="center"></h2>;
         }
     };
+    const renderChart = ()=>{
+        return <ChartManagement
+            optionSet={options}
+            tableValue={tableValue}
+            tableColumns={tableColumns}
+            // tabInfo={}
+        />
+    }
 
     const onChartDelete = (id) =>{
         // const {deleteId} = chartRef.current || {};
@@ -138,19 +143,14 @@ export default function Create({opValue,name}) {
                 margin={{top: "l"}}
             >
                 <Box>
-                    {/*<Filter*/}
-                    {/*    value={selectValue}*/}
-                    {/*    sendValueToFather={getValueFromSon.bind(this)}*/}
-                    {/*    saveOption={save.bind(this)}*/}
-                    {/*    visible={visible}*/}
-                    {/*/>*/}
                     {renderFilter()}
                 </Box>
                 <Box margin={{top: "l"}}>
-                    {renderBoardItem()}
-                    {/*<ChartManagement/>*/}
+                    {/*{renderBoardItem()}*/}
+                    {renderChart()}
                 </Box>
             </ContentLayout>
         </Box>
     );
 }
+export default React.memo(Create)

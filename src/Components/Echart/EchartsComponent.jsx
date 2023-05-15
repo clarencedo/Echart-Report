@@ -16,7 +16,7 @@ function EchartsComponent(props) {
     <div
       ref={eChartsRef}
       style={{
-        width: 700,
+        width: 1200,
         height: 450,
         margin: 5,
       }}
@@ -24,4 +24,4 @@ function EchartsComponent(props) {
   );
 }
 
-export default EchartsComponent;
+export default React.memo(EchartsComponent);

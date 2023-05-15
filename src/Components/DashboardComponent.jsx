@@ -4,40 +4,16 @@ import Header from "@cloudscape-design/components/header";
 import Board from "@cloudscape-design/board-components/board";
 import { Button } from "@cloudscape-design/components";
 import Filter from "./Filter";
-import TestComponent from "./TestComponent";
 
 export default function DashboardComponent() {
   const [items, setItems] = React.useState([
-    // {
-    //   id: "1",
-    //   rowSpan: 1,
-    //   columnSpan: 2,
-    //   data: {
-    //     title: "Demo 1",
-    //     description: "",
-    //     content: null,
-    //   },
-    // },
-    // {
-    //   id: "2",
-    //   rowSpan: 1,
-    //   columnSpan: 2,
-    //   data: {
-    //     title: "Demo 2",
-    //     description: "desc",
-    //     content: (
-    //       <Filter />
-    //     ),
-    //   },
-    // },
     {
       id: "3",
       rowSpan: 4,
       columnSpan: 2,
       data: {
         title: "Demo 3",
-        content: (
-          <TestComponent/>
+        content: (""
         ),
       },
     },
@@ -48,7 +24,7 @@ export default function DashboardComponent() {
       data: {
         title: "Demo 4",
         content: (
-          <TestComponent align="center"/>
+            ""
         ),
       },
     },

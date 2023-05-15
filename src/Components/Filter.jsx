@@ -10,7 +10,7 @@ import {
   Select,
 } from "@cloudscape-design/components";
 import {useNavigate} from "react-router-dom";
-export default function Filter({ value, sendValueToFather, saveOption, visible }) {
+const Filter = ({ value, sendValueToFather, saveOption, visible }) => {
   const [radiovalue, setRadioValue] = React.useState("pie");
   const [title, setTitle] = React.useState();
   const [tab,setTab] = React.useState('');
@@ -124,3 +124,4 @@ export default function Filter({ value, sendValueToFather, saveOption, visible }
     </Container>
   );
 }
+export default React.memo(Filter)
