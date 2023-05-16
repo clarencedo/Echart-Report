@@ -11,12 +11,14 @@ import {useImperativeHandle, useState} from "react";
 import TableChart from "./Table";
 
 const EchartsBoardItemComponent = (props) => {
-   let options = props.optionSet;
-   console.log(options);
+    const {optionSet} = props;
+   let options = optionSet;
+   console.log("receive render options:",options,options.length);
    const [items, setItems] = React.useState([]);
    const [ chartOptions, setChartOptions] = useState();
    const [ deleteId, setDeleteId] = useState([]);
     React.useEffect(()=>{
+        console.log("boraditem-> useEffect")
       const boardItems = [];
       options.forEach((item)=>{
          // console.log("option-id ->", item.id)
@@ -25,7 +27,7 @@ const EchartsBoardItemComponent = (props) => {
             rowSpan: 5,
             columnSpan: 4,
             data:{
-               title: "title",
+               title: "",
                content: (
                   <EchartsComponent option={item} />
                )
@@ -46,7 +48,7 @@ const EchartsBoardItemComponent = (props) => {
       //     })
       // }
       setItems(boardItems);
-    },[props])
+    },[optionSet[optionSet.length - 1]])
     const dosomething = (event) => {
       console.log(event, event.detail.items);
       setItems(event.detail.items);
@@ -187,4 +189,5 @@ const EchartsBoardItemComponent = (props) => {
       />
     );
 }
-export default React.memo(EchartsBoardItemComponent)
+// export default React.memo(EchartsBoardItemComponent)
+export default EchartsBoardItemComponent

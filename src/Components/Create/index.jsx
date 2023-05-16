@@ -40,13 +40,14 @@ const Create = ({opValue,name})=> {
     // const navigate = Rout.useNavigate()
     useEffect(() => {
         // console.log(location.state)
+        console.log("create-useEffect");
         if(location.state)
         {
             setOptions(location.state.ops)
             setEchartVisible(true)
         }
         setTableValue(data.ReportingDashboard);
-    },[location]);
+    },[location,options, tabs]);
     if (loading) return "Loading...";
     if (error) return `Error! ${error.message}`;
     let selectedValue = 0;
@@ -80,8 +81,8 @@ const Create = ({opValue,name})=> {
             val.id = id;
             id++;
         })
+        console.log("generate", pre_ops);
         setOptions(pre_ops);
-        console.log("trigger", pre_ops);
     };
     const save = (param) => {
         console.log("father")
@@ -114,7 +115,6 @@ const Create = ({opValue,name})=> {
             tabValue={tabs}
         />
     }
-
     const onChartDelete = (id) =>{
         // const {deleteId} = chartRef.current || {};
         console.log("Shanchu ",id, options);
@@ -134,8 +134,15 @@ const Create = ({opValue,name})=> {
                 sendValueToFather={getValueFromSon.bind(this)}
                 saveOption={save.bind(this)}
                 visible={visible}
+                addTabInCreatePage={item => addTabs(item)}
             />
         }
+    }
+    const addTabs = (item) =>{
+        let newtabs = tabs;
+        newtabs.push(item);
+        setTabs(newtabs);
+        console.log("new tabs->",tabs);
     }
     return (
         <Box>

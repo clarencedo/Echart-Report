@@ -1,5 +1,5 @@
 import React from "react";
-import {Multiselect, Container, Input} from "@cloudscape-design/components";
+import {Multiselect, Container, Input, Modal, Box} from "@cloudscape-design/components";
 import SpaceBetween from "@cloudscape-design/components/space-between";
 import Button from "@cloudscape-design/components/button";
 import RadioGroup from "@cloudscape-design/components/radio-group";
@@ -10,7 +10,8 @@ import {
   Select,
 } from "@cloudscape-design/components";
 import {useNavigate} from "react-router-dom";
-const Filter = ({ value, sendValueToFather, saveOption, visible }) => {
+const Filter = ({ value, sendValueToFather, saveOption, visible,addTabInCreatePage }) => {
+  const [modalVisible, setModalVisible] = React.useState(false);
   const [radiovalue, setRadioValue] = React.useState("pie");
   const [title, setTitle] = React.useState();
   const [tab,setTab] = React.useState('');
@@ -107,12 +108,30 @@ const Filter = ({ value, sendValueToFather, saveOption, visible }) => {
             ]}
           />
           <Input value={title}  placeholder="Input Title" onChange={({detail}) => setTitle(detail.value)}/>
-          <Input onChange={({ detail }) => setTab(detail.value)} value={tab}/>
+          {/*<Input onChange={({ detail }) => setTab(detail.value)} value={tab}/>*/}
         </SpaceBetween>
         <SpaceBetween size="s">
           <Button onClick={back}>Back</Button>
+          <Button onClick={()=>setModalVisible(true)}>Add Tab</Button>
           <Button onClick={clear}>Clear Selection</Button>
-          <Button onClick={addTab}>Add Tab</Button>
+          <Modal
+              onDismiss={() => setModalVisible(false)}
+              visible={modalVisible}
+              closeAriaLabel="Close modal"
+              footer={
+                <Box float="right">
+                  <SpaceBetween direction="horizontal" size="l">
+                    <Button variant="link" onClick={()=> setModalVisible(false)}>Cancel</Button>
+                    <Button variant="primary" onClick={()=> {addTabInCreatePage(tab);setModalVisible(false);}}>Add</Button>
+                  </SpaceBetween>
+                </Box>
+              }
+              header="Tab Editor"
+          >
+            <SpaceBetween direction="horizontal" size ="xs">
+              <Input onChange={({ detail }) => setTab(detail.value)} value={tab}/>
+            </SpaceBetween>
+          </Modal>
           <Button variant="primary" onClick={sendValue} >
             Generate Report
           </Button>

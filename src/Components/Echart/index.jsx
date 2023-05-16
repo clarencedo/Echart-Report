@@ -6,26 +6,36 @@ import DemoTable from "./demo-table";
 import {useFetcher} from "react-router-dom";
 import EchartsBoardItemComponent from "../EchartsBoardItemComponent";
 const ChartManagement = (props) => {
-    const [tabs,setTabs] = useState([])
     const {tabValue,optionSet,tableValue,tableColumns} = props;
+    const [tabs,setTabs] = useState([tabValue])
     let id =0;
-    console.log('tabs',tabValue);
+    const renderContent = ()=>{
+        if(optionSet.length >=1){
+            return(
+            <EchartsBoardItemComponent
+                optionSet={optionSet}
+                tableValue={tableValue}
+                tableColumns={tableColumns} />
+            )
+        }else{
+            return <div>Empty</div>
+        }
+    }
     useEffect(()=>{
+        console.log("tab->useEffect")
         let tabItems= [];
         tabValue.forEach((val)=>{
             tabItems.push({
                 label: val,
                 id: id+1,
-                content:  <EchartsBoardItemComponent
-                    optionSet={optionSet}
-                    tableValue={tableValue}
-                    tableColumns={tableColumns} />
-            })
+                content: renderContent()
+            });
+            id++;
         });
-        id++;
-        console.log(tabItems);
        setTabs(tabItems);
-    },[props])
+    },[optionSet[optionSet.length - 1],tabValue[tabValue.length -1]])
+    console.log("tab-info",tabs)
+    console.log("tab-options:",optionSet,optionSet.length)
     return (
         <Tabs
             tabs={tabs}
@@ -33,4 +43,5 @@ const ChartManagement = (props) => {
     );
 };
 
-export default React.memo(ChartManagement);
+export default ChartManagement;
+// export default React.memo(ChartManagement);

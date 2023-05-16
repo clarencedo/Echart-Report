@@ -70,6 +70,7 @@ const DetailsCards = ({loadHelpPanelContent}) => {
         setLoading(false)
         // let op = localStorage.getItem('op');
         // console.log(JSON.parse(op))
+
     },[])
 
 
