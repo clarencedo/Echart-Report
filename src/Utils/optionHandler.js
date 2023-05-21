@@ -1,4 +1,5 @@
-function generateOption(param, data) {
+
+function generateOption(param, data,id) {
   const xkey = param.x.label; 
   const ykey = param.y.label;
   const xmap = new Map();
@@ -7,6 +8,7 @@ function generateOption(param, data) {
   const yset = new Set();
   const hybridSet = new Set();
   const hybridMap = new Map();
+  console.log("渲染函数拿到的tabid",id);
   let option = {
     legend: {},
     tooltip: {},
@@ -16,6 +18,7 @@ function generateOption(param, data) {
     xAxis: { type: "category" },
     yAxis: {},
     series: [],
+    tab: id,
   };
   data.map((item)=>{
      let XKey ="";

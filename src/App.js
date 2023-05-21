@@ -59,7 +59,6 @@ function App() {
     link,
     cache: new InMemoryCache(),
   });
-
   const ToolsContent = () => (
       <HelpPanel  header={<h2>Distributions</h2>}>
         <p>
@@ -94,6 +93,7 @@ function App() {
       <div>
         <BrowserRouter>
           <DashBoard/>
+          {/* <Home/>*/}
         </BrowserRouter>
          {/*<DashboardComponent/>*/}
          {/*<MainComponent/>*/}

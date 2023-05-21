@@ -14,8 +14,8 @@ const DetailsCards = ({loadHelpPanelContent}) => {
     const [distributions, setDistributions] = useState([]);
     const navigate = useNavigate()
     const [preferences, setPreferences] = useState(DEFAULT_PREFERENCES);
-    const { data, error, client} = useQuery(TestQuery);
-    console.log("init-data",data);
+    // const { data, error, client} = useQuery(TestQuery);
+    // console.log("init-data",data);
     const  TableEmptyState = ({ resourceName }) => (
         <Box margin={{ vertical: 'xs' }} textAlign="center" color="inherit">
             <SpaceBetween size="xxs">

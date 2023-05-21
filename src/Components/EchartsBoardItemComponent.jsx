@@ -13,12 +13,12 @@ import TableChart from "./Table";
 const EchartsBoardItemComponent = (props) => {
     const {optionSet} = props;
    let options = optionSet;
-   console.log("receive render options:",options,options.length);
+   // console.log("receive render options:",options,options.length);
    const [items, setItems] = React.useState([]);
    const [ chartOptions, setChartOptions] = useState();
    const [ deleteId, setDeleteId] = useState([]);
     React.useEffect(()=>{
-        console.log("boraditem-> useEffect")
+        // console.log("boraditem-> useEffect")
       const boardItems = [];
       options.forEach((item)=>{
          // console.log("option-id ->", item.id)

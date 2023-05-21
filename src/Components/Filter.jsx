@@ -1,5 +1,5 @@
 import React from "react";
-import {Multiselect, Container, Input, Modal, Box} from "@cloudscape-design/components";
+import {Multiselect, Container, Input, Modal, Box, Tabs} from "@cloudscape-design/components";
 import SpaceBetween from "@cloudscape-design/components/space-between";
 import Button from "@cloudscape-design/components/button";
 import RadioGroup from "@cloudscape-design/components/radio-group";
@@ -10,6 +10,8 @@ import {
   Select,
 } from "@cloudscape-design/components";
 import {useNavigate} from "react-router-dom";
+import {useTabStore} from "../Store/TabStore";
+import useSelectedTabStore from "../Store/SelectedTabStore";
 const Filter = ({ value, sendValueToFather, saveOption, visible,addTabInCreatePage }) => {
   const [modalVisible, setModalVisible] = React.useState(false);
   const [radiovalue, setRadioValue] = React.useState("pie");
@@ -25,6 +27,11 @@ const Filter = ({ value, sendValueToFather, saveOption, visible,addTabInCreatePa
   const [selectedxAxisOption, setSelectedxAxisOption] = React.useState(null);
   const [selectedyAxisOption, setSelectedyAxisOption] = React.useState(null);
   const selecteOptions = value;
+  const TabStore = useTabStore();
+  const TabIdStore = useSelectedTabStore();
+  const {name,setName} = TabStore;
+  const {tabId, setId} = TabIdStore;
+  console.log("tab-store-value:",name);
   const sendValue = () => {
     if(radiovalue === "table"){
       sendValueToFather(selectedOptions,"table");
@@ -35,6 +42,7 @@ const Filter = ({ value, sendValueToFather, saveOption, visible,addTabInCreatePa
       type: radiovalue,
       x: selectedxAxisOption ? selectedxAxisOption : selectedOptions[0],
       y: selectedyAxisOption ? selectedyAxisOption : selectedOptions[1],
+      tab: tabId,
     };
     sendValueToFather(selection);
   };
@@ -122,7 +130,7 @@ const Filter = ({ value, sendValueToFather, saveOption, visible,addTabInCreatePa
                 <Box float="right">
                   <SpaceBetween direction="horizontal" size="l">
                     <Button variant="link" onClick={()=> setModalVisible(false)}>Cancel</Button>
-                    <Button variant="primary" onClick={()=> {addTabInCreatePage(tab);setModalVisible(false);}}>Add</Button>
+                    <Button variant="primary" onClick={()=> {setName(tab);addTabInCreatePage(tab);setModalVisible(false)}}>Add</Button>
                   </SpaceBetween>
                 </Box>
               }

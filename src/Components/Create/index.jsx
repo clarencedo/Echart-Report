@@ -20,6 +20,8 @@ import DashboardComponent from ".././DashboardComponent";
 import EchartsBoardItemComponent from "../EchartsBoardItemComponent";
 import {useLocation, useParams} from "react-router-dom";
 import ChartManagement from "../Echart";
+import {useTabStore} from "../../Store/TabStore";
+import useSelectedTabStore from "../../Store/SelectedTabStore";
 
 const Create = ({opValue,name})=> {
     const [echartoption, setEchartOption] = useState();
@@ -36,6 +38,12 @@ const Create = ({opValue,name})=> {
     const [tabs,setTabs] = useState(['echarts-tab'])
     const {loading, data, error, client} = useQuery(TestQuery);
     const selectValue = [];
+    const TabStore = useTabStore();
+    // const {name} = TabStore;
+    // const nameInStore = useTabStore((state)=>state.name)
+    const nameInStore = TabStore.name;
+    const TabIdStore = useSelectedTabStore();
+    const {tabId} = TabIdStore;
     let id = 1;
     // const navigate = Rout.useNavigate()
     useEffect(() => {
@@ -67,10 +75,13 @@ const Create = ({opValue,name})=> {
             setTableColumns(fieldArr)
             return;
         }
-        generateOption(param, data.ReportingDashboard);
+        // generateOption(param, data.ReportingDashboard);
         setEchartVisible(true);
-        setEchartOption(generateOption(param, data.ReportingDashboard));
-        let ops = generateOption(param, data.ReportingDashboard);
+        console.log("用来处理的Tabid",tabId)
+        let opt_value = generateOption(param, data.ReportingDashboard,tabId)
+        console.log("初步处理之后的op",opt_value);
+        setEchartOption(opt_value);
+        let ops = opt_value;
         let pre_ops = options;
         //   let newops = [];
         //   newops.push(pre_ops);
@@ -139,10 +150,16 @@ const Create = ({opValue,name})=> {
         }
     }
     const addTabs = (item) =>{
+        // let newtabs = tabs;
+        // newtabs.push(item);
+        // setTabs(newtabs);
+        console.log("从Filter组件拿到tab的值为,",item)
+        console.log("从Store里拿的Tab值为,",nameInStore)
         let newtabs = tabs;
+        // newtabs.push(nameInStore);
         newtabs.push(item);
         setTabs(newtabs);
-        console.log("new tabs->",tabs);
+        console.log("receive new tabs->",newtabs);
     }
     return (
         <Box>

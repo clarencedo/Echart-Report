@@ -9,7 +9,8 @@ import {
     SpaceBetween,
     Button,
     TextFilter,
-    AppLayout
+    AppLayout,
+    Spinner
 } from '@cloudscape-design/components';
 import FullPageHeader from "./full-page-header";
 import { useCollection } from '@cloudscape-design/collection-hooks';
@@ -19,6 +20,9 @@ import {Breadcrumbs, ToolsContent} from "./common-components";
 import DetailsCards from "./index";
 import {Route, Routes, useNavigate} from "react-router-dom";
 import Create from "../Create";
+import {useQuery} from "@apollo/client";
+import TestQuery from "../../GraphQL/ReportingDashboardQuery";
+import appSyncConfig from "../../aws-exports";
 // import {paginationAriaLabels} from "../../i18n-strings/pagination";
 const DashBoard = ({loadHelpPanelContent}) => {
     const [toolsOpen, setToolsOpen] = useState(false);
@@ -34,6 +38,24 @@ const DashBoard = ({loadHelpPanelContent}) => {
         toolsToggle: 'Open help panel',
         toolsClose: 'Close help panel',
     };
+    const { loading, data, error, client } = useQuery(TestQuery);
+    // if (loading) return "Loading...";
+    if (loading) return (
+        <p align="center">
+            <Spinner style="align:center" size="large" />
+        </p>
+    );
+    if (error) return `Error! ${error.message}`;
+    console.log("init-data",data);
+    // const url = appSyncConfig.aws_appsync_graphqlEndpoint;
+    //
+    // const data = fetch(url,{
+    //     method: 'POST',
+    //     headers: {'x-api-key': 'da2-vdykfyhrqzbbdiwbywb4fdgv64'},
+    //     body: JSON.stringify({
+    //         'query': TestQuery
+    //     })
+    // }).then((resp) =>resp.json()).then((data)=>console.log('data',data)).catch((err)=> console.log(err.message))
     const CustomAppLayout = forwardRef((props, ref) =>{
         return <AppLayout ref={ref} ariaLabels={appLayoutAriaLabels} {...props} />;
     });
