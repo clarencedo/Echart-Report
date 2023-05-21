@@ -18,7 +18,6 @@ const EchartsBoardItemComponent = (props) => {
    const [ chartOptions, setChartOptions] = useState();
    const [ deleteId, setDeleteId] = useState([]);
     React.useEffect(()=>{
-        // console.log("boraditem-> useEffect")
       const boardItems = [];
       options.forEach((item)=>{
          // console.log("option-id ->", item.id)

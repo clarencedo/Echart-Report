@@ -115,7 +115,7 @@ const Filter = ({ value, sendValueToFather, saveOption, visible,addTabInCreatePa
               { value: "table", label: "Table" },
             ]}
           />
-          <Input value={title}  placeholder="Input Title" onChange={({detail}) => setTitle(detail.value)}/>
+          {/*<Input value={title}  placeholder="Input Title" onChange={({detail}) => setTitle(detail.value)}/>*/}
           {/*<Input onChange={({ detail }) => setTab(detail.value)} value={tab}/>*/}
         </SpaceBetween>
         <SpaceBetween size="s">

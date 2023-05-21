@@ -18,7 +18,6 @@ function Home() {
   const { loading, data, error, client } = useQuery(TestQuery);
   const selectValue = [];
   useEffect(()=>{
-    console.log("累死了，真的牛逼")
   })
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;

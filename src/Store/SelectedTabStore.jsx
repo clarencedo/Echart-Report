@@ -1,7 +1,7 @@
 import {create} from 'zustand'
 
 const useSelectedTabStore = create((set) => ({
-    tabId: null,
+    tabId: 1,
     setId: (id) => set((state) => ({ tabId: id })),
 }));
 

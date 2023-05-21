@@ -75,19 +75,12 @@ const Create = ({opValue,name})=> {
             setTableColumns(fieldArr)
             return;
         }
-        // generateOption(param, data.ReportingDashboard);
         setEchartVisible(true);
-        console.log("用来处理的Tabid",tabId)
         let opt_value = generateOption(param, data.ReportingDashboard,tabId)
-        console.log("初步处理之后的op",opt_value);
         setEchartOption(opt_value);
-        let ops = opt_value;
+        // let ops = opt_value;
         let pre_ops = options;
-        //   let newops = [];
-        //   newops.push(pre_ops);
-        //   newops.push()
-        //   setOptions(newops);
-        pre_ops.push(ops);
+        pre_ops.push(opt_value);
         pre_ops.forEach((val) => {
             val.id = id;
             id++;

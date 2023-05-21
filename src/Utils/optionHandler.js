@@ -8,7 +8,6 @@ function generateOption(param, data,id) {
   const yset = new Set();
   const hybridSet = new Set();
   const hybridMap = new Map();
-  console.log("渲染函数拿到的tabid",id);
   let option = {
     legend: {},
     tooltip: {},

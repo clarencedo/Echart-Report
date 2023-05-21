@@ -12,14 +12,12 @@ const ChartManagement = (props) => {
     const TabIdStore = useSelectedTabStore();
     const {tabId, setId} = TabIdStore;
     let id =0;
-    const renderContent = (id)=>{
-        // console.log("原材料",optionSet)
+    const renderContent = (param)=>{
         let value = optionSet.filter((val)=>{
-            // console.log("aAAAA",val,id)
-            val.tab = id;
-            return val;
+            if(val.tab === param){
+                return val;
+            }
         });
-        // console.log("过滤之后的Options",value)
         if(optionSet.length >=1){
             return(
             <EchartsBoardItemComponent
@@ -32,22 +30,17 @@ const ChartManagement = (props) => {
         }
     }
     useEffect(()=>{
-        // console.log("tab->useEffect")
-        console.log("TabsManage拿到的options",optionSet)
         let tabItems= [];
         tabValue.forEach((val)=>{
             tabItems.push({
                 label: val,
                 id: id+1,
-                content: renderContent(id)
+                content: renderContent(id+1)
             });
             id++;
         });
        setTabs(tabItems);
     },[optionSet[optionSet.length - 1],tabValue[tabValue.length -1]])
-    // console.log("tab-info",tabs)
-    // console.log("tab-options:",optionSet,optionSet.length)
-    console.log("ChartManage->Tabid is", tabId);
     return (
         <Tabs
             onChange={(e)=>{setId(e.detail.activeTabId)}}
