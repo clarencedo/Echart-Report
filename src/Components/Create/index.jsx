@@ -22,6 +22,7 @@ import {useLocation, useParams} from "react-router-dom";
 import ChartManagement from "../Echart";
 import {useTabStore} from "../../Store/TabStore";
 import useSelectedTabStore from "../../Store/SelectedTabStore";
+import useDeletedStore from "../../Store/DeletedStore";
 
 const Create = ({opValue,name})=> {
     const [echartoption, setEchartOption] = useState();
@@ -45,6 +46,7 @@ const Create = ({opValue,name})=> {
     const TabIdStore = useSelectedTabStore();
     const {tabId} = TabIdStore;
     let id = 1;
+    const {deletedId} = useDeletedStore((state)=> state.deleteId)
     // const navigate = Rout.useNavigate()
     useEffect(() => {
         // console.log(location.state)
@@ -55,6 +57,9 @@ const Create = ({opValue,name})=> {
             setEchartVisible(true)
         }
         setTableValue(data.ReportingDashboard);
+        if(deletedId >1){
+            onChartDelete(deletedId)
+        }
     },[location,options, tabs]);
     if (loading) return "Loading...";
     if (error) return `Error! ${error.message}`;
@@ -86,6 +91,11 @@ const Create = ({opValue,name})=> {
             id++;
         })
         console.log("generate", pre_ops);
+        pre_ops = pre_ops.filter((val)=>{
+            if(val.id !== deletedId){
+                return val
+            }
+        })
         setOptions(pre_ops);
     };
     const save = (param) => {
@@ -93,13 +103,6 @@ const Create = ({opValue,name})=> {
         localStorage.setItem("title",param);
         localStorage.setItem("op", JSON.stringify(options));
     }
-    // const renderEchart = () => {
-    //     if (echartVisble) {
-    //         return <Echart option={echartoption} />;
-    //     } else {
-    //         return <h2 align="center">No Data</h2>;
-    //     }
-    // };
     const renderBoardItem = () => {
         if (echartVisble ) {
             return <EchartsBoardItemComponent

@@ -9,6 +9,7 @@ import ButtonDropdown from "@cloudscape-design/components/button-dropdown";
 import Tabs from "@cloudscape-design/components/tabs";
 import {useImperativeHandle, useState} from "react";
 import TableChart from "./Table";
+import useDeletedStore from "../Store/DeletedStore";
 
 const EchartsBoardItemComponent = (props) => {
     const {optionSet} = props;
@@ -17,6 +18,8 @@ const EchartsBoardItemComponent = (props) => {
    const [items, setItems] = React.useState([]);
    const [ chartOptions, setChartOptions] = useState();
    const [ deleteId, setDeleteId] = useState([]);
+   const deleteIdInStore = useDeletedStore((state) => state.deleteId);
+   const setDeleteIdInStore = useDeletedStore((state) => state.setId)
     React.useEffect(()=>{
       const boardItems = [];
       options.forEach((item)=>{
@@ -68,7 +71,8 @@ const EchartsBoardItemComponent = (props) => {
         // options = new_ops;
         // console.log('finanl -op',options,new_ops)
        setItems(val);
-        props.deleteId(param);
+        // props.deleteId(param);
+        setDeleteIdInStore(param);
     }
 
     return (
