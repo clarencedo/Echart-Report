@@ -10,20 +10,36 @@ import Tabs from "@cloudscape-design/components/tabs";
 import {useImperativeHandle, useState} from "react";
 import TableChart from "./Table";
 import useDeletedStore from "../Store/DeletedStore";
+import {useQuery} from "@apollo/client";
+import TestQuery from "../GraphQL/ReportingDashboardQuery";
 
 const EchartsBoardItemComponent = (props) => {
-    const {optionSet} = props;
+    const {optionSet,tableValue} = props;
    let options = optionSet;
    // console.log("receive render options:",options,options.length);
    const [items, setItems] = React.useState([]);
    const [ chartOptions, setChartOptions] = useState();
    const [ deleteId, setDeleteId] = useState([]);
    const deleteIdInStore = useDeletedStore((state) => state.deleteId);
+   const deletedListInStore = useDeletedStore((state) => state.deletedIdList);
    const setDeleteIdInStore = useDeletedStore((state) => state.setId)
     React.useEffect(()=>{
       const boardItems = [];
       options.forEach((item)=>{
-         // console.log("option-id ->", item.id)
+          if(item.type === "table"){
+              boardItems.push({
+                  id: item.id,
+                  rowSpan: 5,
+                  columnSpan: 4,
+                  data:{
+                      title: "",
+                      content: (
+                          <TableChart tableValue={tableValue} tableColumns={item.field}/>
+                      )
+                  }
+              })
+              return;
+          }
          boardItems.push({
             id: item.id,
             rowSpan: 5,
@@ -36,43 +52,18 @@ const EchartsBoardItemComponent = (props) => {
             }
          })
       });
-      // if(props.tableColumns){
-      //     boardItems.push({
-      //         id: boardItems.length+1,
-      //         rowSpan: 5,
-      //         columnSpan: 4,
-      //         data:{
-      //             title: "title",
-      //             content: (
-      //                <TableChart tableValue={props.tableValue} tableColumns={props.tableColumns}/>
-      //             )
-      //         }
-      //     })
-      // }
       setItems(boardItems);
     },[optionSet[optionSet.length - 1]])
     const dosomething = (event) => {
       console.log(event, event.detail.items);
       setItems(event.detail.items);
     };
-    const onRemove = (param) =>{
+    const onRemove = (delete_id) =>{
         let val = items.filter(({id}) =>{
-            return id !== param;
+            return id !== delete_id;
         })
-        // options = options.filter(({id}) =>{
-        //     return id !== param;
-        // })
-        // let new_ops = [];
-        // options.forEach((item)=>{
-        //    if(item.id !== param){
-        //        new_ops.push(item);
-        //    }
-        // });
-        // options = new_ops;
-        // console.log('finanl -op',options,new_ops)
-       setItems(val);
-        // props.deleteId(param);
-        setDeleteIdInStore(param);
+        setItems(val);
+        props.deleteId(delete_id);
     }
 
     return (

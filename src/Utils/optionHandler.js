@@ -18,6 +18,7 @@ function generateOption(param, data,id) {
     yAxis: {},
     series: [],
     tab: id,
+    id: param.id
   };
   data.map((item)=>{
      let XKey ="";

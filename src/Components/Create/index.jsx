@@ -27,11 +27,8 @@ import useDeletedStore from "../../Store/DeletedStore";
 const Create = ({opValue,name})=> {
     const [echartoption, setEchartOption] = useState();
     const chartRef = useRef();
-    // console.log(name,"name")
     let location = useLocation()
-    // console.log("location",location)
     const {visible} = useParams()
-    // console.log("create",visible)
     const [echartVisble, setEchartVisible] = useState(false);
     const [options, setOptions] = useState([]);
     const [tableColumns, setTableColumns] = useState([null]);
@@ -47,10 +44,9 @@ const Create = ({opValue,name})=> {
     const {tabId} = TabIdStore;
     let id = 1;
     const {deletedId} = useDeletedStore((state)=> state.deleteId)
+    const [deletedArray,setDeletedArray] = useState([])
     // const navigate = Rout.useNavigate()
     useEffect(() => {
-        // console.log(location.state)
-        console.log("create-useEffect");
         if(location.state)
         {
             setOptions(location.state.ops)
@@ -72,30 +68,23 @@ const Create = ({opValue,name})=> {
         selectedValue++;
     }
 
-    const getValueFromSon = (param,type) => {
-        if(type === "table"){
-            const fieldArr = param.map(({label})=>{
-                return label;
-            })
-            setTableColumns(fieldArr)
-            return;
-        }
+    const getValueFromSon = (param) => {
+        // if(param.type === "table"){
+        //     const fieldArr = param.filed.map(({label})=>{
+        //         return label;
+        //     })
+        //     setTableColumns(fieldArr)
+        //     return;
+        // }
         setEchartVisible(true);
-        let opt_value = generateOption(param, data.ReportingDashboard,tabId)
-        setEchartOption(opt_value);
-        // let ops = opt_value;
         let pre_ops = options;
-        pre_ops.push(opt_value);
-        pre_ops.forEach((val) => {
-            val.id = id;
-            id++;
-        })
-        console.log("generate", pre_ops);
+        pre_ops.push(param);
         pre_ops = pre_ops.filter((val)=>{
             if(val.id !== deletedId){
                 return val
             }
         })
+        console.log("生成的options",options)
         setOptions(pre_ops);
     };
     const save = (param) => {
@@ -103,35 +92,33 @@ const Create = ({opValue,name})=> {
         localStorage.setItem("title",param);
         localStorage.setItem("op", JSON.stringify(options));
     }
-    const renderBoardItem = () => {
-        if (echartVisble ) {
-            return <EchartsBoardItemComponent
-                optionSet={options}
-                deleteId={id => onChartDelete(id)}
-                tableValue={tableValue}
-                tableColumns={tableColumns} />;
-        } else {
-            return <h2 align="center"></h2>;
-        }
-    };
+    // const renderBoardItem = () => {
+    //     if (echartVisble ) {
+    //         return <EchartsBoardItemComponent
+    //             optionSet={options}
+    //             deleteId={id => onChartDelete(id)}
+    //             tableValue={tableValue}
+    //             tableColumns={tableColumns} />;
+    //     } else {
+    //         return <h2 align="center"></h2>;
+    //     }
+    // };
     const renderChart = ()=>{
         return <ChartManagement
             optionSet={options}
             tableValue={tableValue}
-            tableColumns={tableColumns}
             tabValue={tabs}
+            deleteHandler={id => onChartDelete(id)}
         />
     }
     const onChartDelete = (id) =>{
-        // const {deleteId} = chartRef.current || {};
-        console.log("Shanchu ",id, options);
+        console.log("!!!!!进来了",id)
         let val = []
         options.forEach( (item)=>{
             if(item.id !== id){
                 val.push(item);
             }
         })
-        console.log("create-options",options)
         setOptions(val);
     }
     const renderFilter = () =>{
@@ -149,13 +136,13 @@ const Create = ({opValue,name})=> {
         // let newtabs = tabs;
         // newtabs.push(item);
         // setTabs(newtabs);
-        console.log("从Filter组件拿到tab的值为,",item)
-        console.log("从Store里拿的Tab值为,",nameInStore)
+        // console.log("从Filter组件拿到tab的值为,",item)
+        // console.log("从Store里拿的Tab值为,",nameInStore)
         let newtabs = tabs;
         // newtabs.push(nameInStore);
         newtabs.push(item);
         setTabs(newtabs);
-        console.log("receive new tabs->",newtabs);
+        // console.log("receive new tabs->",newtabs);
     }
     return (
         <Box>

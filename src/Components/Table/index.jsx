@@ -8,6 +8,7 @@ import Pagination from "@cloudscape-design/components/pagination";
 import CollectionPreferences from "@cloudscape-design/components/collection-preferences";
 import columns from "./columns";
 function TableChart(props) {
+    const {tableValue,tableColumns} = props;
     const [
         selectedItems,
         setSelectedItems
@@ -16,10 +17,9 @@ function TableChart(props) {
     const [columnConfig,setColumnConfig] = useState([])
     const [visibleColumn, setVisibleColumn] = useState([])
     useEffect(()=>{
-        console.log("log!!!!!!")
-        setItems(props.tableValue);
+        setItems(tableValue);
         setColumnConfig(columns);
-        setVisibleColumn(props.tableColumns)
+        setVisibleColumn(tableColumns)
     },[props])
     return (
         <Table

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {Multiselect, Container, Input, Modal, Box, Tabs} from "@cloudscape-design/components";
 import SpaceBetween from "@cloudscape-design/components/space-between";
 import Button from "@cloudscape-design/components/button";
@@ -12,6 +12,9 @@ import {
 import {useNavigate} from "react-router-dom";
 import {useTabStore} from "../Store/TabStore";
 import useSelectedTabStore from "../Store/SelectedTabStore";
+import {useQuery} from "@apollo/client";
+import TestQuery from "../GraphQL/ReportingDashboardQuery";
+import generateOption from "../Utils/optionHandler";
 const Filter = ({ value, sendValueToFather, saveOption, visible,addTabInCreatePage }) => {
   const [modalVisible, setModalVisible] = React.useState(false);
   const [radiovalue, setRadioValue] = React.useState("pie");
@@ -31,27 +34,45 @@ const Filter = ({ value, sendValueToFather, saveOption, visible,addTabInCreatePa
   const TabIdStore = useSelectedTabStore();
   const {name,setName} = TabStore;
   const {tabId, setId} = TabIdStore;
-  console.log("tab-store-value:",name);
+  const {loading, data, error, client} = useQuery(TestQuery);
+  const [localId, setLocalId] = useState(1);
   const sendValue = () => {
     if(radiovalue === "table"){
-      sendValueToFather(selectedOptions,"table");
+      const columns = selectedOptions.map(({label})=>{
+        return label;
+      })
+      const selection = {
+        field: columns,
+        type: "table",
+        tab: tabId,
+        id: localId
+      }
+      setLocalId((pre)=>pre+1)
+      sendValueToFather(selection);
       return;
     }
     const selection = {
-      filed: selectedOptions,
+      field: selectedOptions,
       type: radiovalue,
       x: selectedxAxisOption ? selectedxAxisOption : selectedOptions[0],
       y: selectedyAxisOption ? selectedyAxisOption : selectedOptions[1],
       tab: tabId,
+      id: localId
     };
-    sendValueToFather(selection);
+    setLocalId((pre)=>pre+1)
+    // console.log("发送的配置",selection)
+    let output_option =
+        generateOption(selection,data.ReportingDashboard,tabId);
+    sendValueToFather(output_option);
   };
   const saveOptions = () =>{
     console.log("son");
     saveOption(title);
   }
   const back = () =>{
-      navigate("/")
+    setId(1)
+    setName("echarts-tab")
+    navigate("/")
   }
 
   const clear = () =>{
@@ -130,7 +151,7 @@ const Filter = ({ value, sendValueToFather, saveOption, visible,addTabInCreatePa
                 <Box float="right">
                   <SpaceBetween direction="horizontal" size="l">
                     <Button variant="link" onClick={()=> setModalVisible(false)}>Cancel</Button>
-                    <Button variant="primary" onClick={()=> {setName(tab);addTabInCreatePage(tab);setModalVisible(false)}}>Add</Button>
+                    <Button variant="primary" onClick={()=> {setName(tab);addTabInCreatePage(tab);setTab("");setModalVisible(false)}}>Add</Button>
                   </SpaceBetween>
                 </Box>
               }

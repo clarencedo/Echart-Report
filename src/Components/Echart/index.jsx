@@ -7,9 +7,10 @@ import {useFetcher} from "react-router-dom";
 import EchartsBoardItemComponent from "../EchartsBoardItemComponent";
 import useSelectedTabStore from "../../Store/SelectedTabStore";
 const ChartManagement = (props) => {
-    const {tabValue,optionSet,tableValue,tableColumns} = props;
+    const {tabValue,optionSet,tableValue} = props;
     const [tabs,setTabs] = useState([tabValue])
     const TabIdStore = useSelectedTabStore();
+    const [boardOptions, setBoardOptions] = useState([])
     const {tabId, setId} = TabIdStore;
     let id =0;
     const renderContent = (param)=>{
@@ -18,16 +19,27 @@ const ChartManagement = (props) => {
                 return val;
             }
         });
+        // setBoardOptions(value)
         if(optionSet.length >=1){
             return(
             <EchartsBoardItemComponent
                 optionSet={value}
                 tableValue={tableValue}
-                tableColumns={tableColumns} />
+                deleteId={id => onChartDelete(id)}
+            />
             )
         }else{
-            return <div>Empty</div>
+            return <div></div>
         }
+    }
+    const onChartDelete = (id) =>{
+        // let val = []
+        // optionSet.forEach( (item)=>{
+        //     if(item.id !== id){
+        //         val.push(item)
+        //     }
+        // })
+        props.deleteHandler(id);
     }
     useEffect(()=>{
         let tabItems= [];
